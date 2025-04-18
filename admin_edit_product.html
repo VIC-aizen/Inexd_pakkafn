@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Product{% endblock %}
+
+{% block content %}
+<div class="edit-product-container">
+    <h1 class="page-heading">✏️ Edit Product</h1>
+
+    <!-- ✅ Add enctype for file upload -->
+    <form method="POST" enctype="multipart/form-data" class="product-form">
+        <div class="form-group">
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" name="name" value="{{ product.name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price (₹):</label>
+            <input type="number" id="price" name="price" value="{{ product.price }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="stock">Stock Quantity:</label>
+            <input type="number" id="stock" name="stock" value="{{ product.stock }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="size">Available Size(s):</label>
+            <input type="text" id="size" name="size" value="{{ product.size }}" placeholder="E.g., S, M, L" required>
+        </div>
+
+        <div class="form-group">
+            <label for="supplier_id">Select Supplier:</label>
+            <select id="supplier_id" name="supplier_id" required>
+                <option value="" disabled>Select a supplier</option>
+                {% for supplier in suppliers %}
+                    <option value="{{ supplier.supplier_id }}" {% if supplier.supplier_id == product.supplier_id %}selected{% endif %}>{{ supplier.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- ✅ New image upload field -->
+        <div class="form-group">
+            <label for="image">Update Product Image:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+        </div>
+
+        <!-- ✅ Optional: Show current image -->
+        {% if product.image %}
+        <div class="form-group">
+            <p>Current Image:</p>
+            <img src="{{ url_for('static', filename='uploads/' + product.image) }}" alt="Current Product Image" style="max-width: 200px;">
+        </div>
+        {% endif %}
+
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">💾 Update Product</button>
+            <a href="{{ url_for('admin.view_products') }}" class="back-link">⬅️ Back to Product List</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

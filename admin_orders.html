@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Orders</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #f8f8f8;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            margin-left: 20px;
+            color: #222;
+            font-weight: 500;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 2rem 0 1rem;
+            font-size: 2rem;
+        }
+
+        table {
+            width: 95%;
+            margin: 0 auto 3rem;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.8rem 1rem;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+
+        button {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+            border: none;
+            background-color: #e681ff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #c95ee0;
+        }
+
+        .view-order-items-btn {
+            background-color: #333;
+        }
+
+        a.button-link {
+            display: inline-block;
+            margin: 2rem auto;
+            text-align: center;
+            color: #333;
+            font-weight: 500;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div><strong>LeLo</strong></div>
+        <div>
+            <a href="{{ url_for('admin.admin_dashboard') }}">Admin Dashboard</a>
+            <a href="{{ url_for('admin.view_products') }}">Manage Products</a>
+            <a href="{{ url_for('admin.view_users') }}">Manage Users</a>
+            <a href="{{ url_for('admin.view_orders') }}">Manage Orders</a>
+            <a href="{{ url_for('admin.manage_suppliers') }}">Manage Suppliers</a>
+            <a href="{{ url_for('admin.admin_logout') }}">Logout</a>
+        </div>
+    </div>
+
+    <!-- Page Heading -->
+    <h1>All Orders</h1>
+
+    <!-- Orders Table -->
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>User ID</th>
+            <th>Order Status</th>
+            <th>Payment Status</th>
+            <th>Actions</th>
+            <th>Return Request</th>
+            <th>Order Items</th>
+            <th>Delete</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.order_id }}</td>
+            <td>{{ order.user_id }}</td>
+            <td>{{ order.order_status }}</td>
+            <td>
+                {% if order.payment_status == 'Success' %}
+                    ✅ Success
+                {% else %}
+                    ❌ Not Paid
+                {% endif %}
+            </td>
+            <td>
+                {% if order.order_status == "Pending" %}
+                    <form action="{{ url_for('admin.update_shipping', order_id=order.order_id) }}" method="POST">
+                        <button type="submit" name="shipping_status" value="Shipped">Mark as Shipped</button>
+                    </form>
+                {% elif order.order_status == "Shipped" %}
+                    <form action="{{ url_for('admin.update_shipping', order_id=order.order_id) }}" method="POST">
+                        <button type="submit" name="shipping_status" value="Delivered">Mark as Delivered</button>
+                    </form>
+                {% elif order.order_status == "Delivered" %}
+                    ✅ Delivered
+                {% endif %}
+            </td>
+            <td>
+                {% if order.order_id in return_requests %}
+                    {% set req = return_requests[order.order_id] %}
+                    <strong>Reason:</strong> {{ req.reason }}<br>
+                    {% if req.status == "Pending" %}
+                        <form action="{{ url_for('admin.process_return', return_id=req.return_id, action='approve') }}" method="POST" style="margin: 5px 0;">
+                            <button type="submit">✅ Approve</button>
+                        </form>
+                        <form action="{{ url_for('admin.process_return', return_id=req.return_id, action='reject') }}" method="POST">
+                            <button type="submit" style="background-color: #ff4d4d;">❌ Reject</button>
+                        </form>
+                    {% elif req.status == "Approved" %}
+                        ✅ Return Approved
+                    {% elif req.status == "Rejected" %}
+                        ❌ Return Rejected
+                    {% else %}
+                        ❓ Unknown Status
+                    {% endif %}
+                {% else %}
+                    No Return Requested
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ url_for('admin.order_details', order_id=order.order_id) }}">
+                    <button class="view-order-items-btn">View Items</button>
+                </a>
+            </td>
+            <td>
+                <form action="{{ url_for('admin.delete_order', order_id=order.order_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this order? This action cannot be undone.');">
+                    <button type="submit" style="background-color: #ff4d4d;">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Back to Dashboard -->
+    <div style="text-align: center;">
+        <a class="button-link" href="{{ url_for('admin.admin_dashboard') }}">⬅️ Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

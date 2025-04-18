@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Users{% endblock %}
+
+{% block content %}
+<div class="user-management-container">
+    <h1 class="page-title">All Users</h1>
+
+    {% if users %}
+    <div class="user-table-wrapper">
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.user_id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.username }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>No users found.</p>
+    {% endif %}
+
+    <div class="back-link">
+        <a href="{{ url_for('admin.admin_dashboard') }}">⬅ Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

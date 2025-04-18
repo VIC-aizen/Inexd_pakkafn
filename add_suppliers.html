@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Supplier{% endblock %}
+
+{% block content %}
+<div class="container form-page">
+  <h1 class="page-title">Add New Supplier</h1>
+
+  <form method="POST" action="{{ url_for('admin.add_supplier') }}" class="styled-form">
+    <div class="form-row">
+      <label for="name">Supplier Name</label>
+      <input type="text" name="name" id="name" placeholder="E.g., CottonTex Pvt Ltd" required>
+    </div>
+
+    <div class="form-row">
+      <label for="contact_info">Contact Information</label>
+      <input type="text" name="contact_info" id="contact_info" placeholder="E.g., contact@cottontex.com / +91 9988776655" required>
+    </div>
+
+    <div class="form-row">
+      <label for="address">Address</label>
+      <input type="text" name="address" id="address" placeholder="E.g., 15 MG Road, Bengaluru">
+    </div>
+
+    <div class="form-row">
+      <button type="submit" class="submit-btn">➕ Add Supplier</button>
+    </div>
+  </form>
+
+  <a href="{{ url_for('admin.manage_suppliers') }}" class="back-link">⬅️ Back to Suppliers</a>
+</div>
+{% endblock %}

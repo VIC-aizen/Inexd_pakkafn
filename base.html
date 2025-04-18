@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
+    <title>{% block title %}Levi Clone{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #111;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            padding: 18px 0;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #111;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 8px 10px;
+            transition: all 0.2s ease;
+        }
+
+        nav a:hover {
+            color: #e681ff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .flash-messages {
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        .flash-message {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .flash-message.success {
+            background-color: #e1f9e1;
+            color: #2d7a2d;
+        }
+
+        .flash-message.danger {
+            background-color: #ffe6e6;
+            color: #c0392b;
+        }
+
+        .flash-message.info {
+            background-color: #eef3ff;
+            color: #2c3e50;
+        }
+        nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    padding: 18px 40px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.nav-brand a {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 1px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #111;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 8px 10px;
+    transition: all 0.2s ease;
+    margin-left: 10px;
+}
+
+.nav-links a:hover {
+    color: #e681ff;
+}
+.nav-brand span {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 1px;
+}
+.product-page {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: auto;
+    background-color: #fff;
+    font-family: 'Outfit', sans-serif;
+}
+
+.page-title {
+    font-size: 36px;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #111;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 40px;
+}
+
+.product-card {
+    background: #ffffff;
+    padding: 30px 25px;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.04);
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+.product-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+.product-size,
+.product-price {
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.add-to-cart-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.quantity-input {
+    width: 60px;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.add-btn {
+    background-color: #111;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.add-btn:hover {
+    background-color: #333;
+}
+
+
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+
+<nav>
+    <div class="nav-brand">
+        <a href="{{ url_for('main.homepage') }}"><span>LeLo</span></a>
+
+    </div>
+    
+    <div class="nav-links">
+        {% if 'admin_id' in session %}
+            <a href="{{ url_for('admin.admin_dashboard') }}">Admin Dashboard</a>
+            <a href="{{ url_for('admin.view_products') }}">Manage Products</a>
+            <a href="{{ url_for('admin.view_users') }}">Manage Users</a>
+            <a href="{{ url_for('admin.view_orders') }}">Manage Orders</a>
+            <a href="{{ url_for('admin.manage_suppliers') }}">Manage Suppliers</a>
+            <a href="{{ url_for('admin.admin_logout') }}">Logout</a>
+        {% elif 'user_id' in session %}
+            <a href="{{ url_for('product.view_products') }}">🛍️ Browse Products</a>
+            <a href="{{ url_for('cart.view_cart') }}">🛒 View Cart</a>
+            <a href="{{ url_for('user.dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('user.logout') }}">Logout</a>
+            {% else %}
+            <a href="{{ url_for('user.login') }}">Login</a>
+            <a href="{{ url_for('user.signup') }}">Sign Up</a>
+            <a href="{{ url_for('admin.admin_login') }}">Admin Login</a>
+            <a href="{{ url_for('product.view_products') }}">Browse Products</a>
+        {% endif %}
+    </div>
+</nav>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages-container">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">
+                    <span class="icon">
+                        {% if category == 'success' %}
+                            ✅
+                        {% elif category == 'warning' %}
+                            ⚠️
+                        {% elif category == 'error' %}
+                            ❌
+                        {% else %}
+                            ℹ️
+                        {% endif %}
+                    </span>
+                    <span>{{ message }}</span>
+                    <button class="close-btn" onclick="this.parentElement.style.display='none'">×</button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+
+
+
+    <!-- Page Content -->
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+<script>
+    setTimeout(() => {
+        const flashContainer = document.getElementById("flash-container");
+        if (flashContainer) {
+            flashContainer.remove();
+        }
+    }, 4000); // Same duration as the fadeOut animation
+</script>
+
+
+</body>
+</html>

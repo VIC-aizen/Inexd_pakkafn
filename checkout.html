@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+    <div class="checkout-container">
+        <h2 class="checkout-heading">🧾 Order Summary</h2>
+        
+        <div class="checkout-items">
+            {% for item in cart_items %}
+                <div class="checkout-item">
+                    <p><strong>{{ item.product.name }}</strong></p>
+                    <p>Size: {{ item.product.size }}</p>
+                    <p>Quantity: {{ item.quantity }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <form method="POST" action="{{ url_for('cart.checkout') }}" class="checkout-form">
+            {% if address %}
+                <label for="address">Saved Delivery Address:</label><br>
+                <textarea id="address" disabled>{{ address }}</textarea>
+                <input type="hidden" name="address" value="{{ address }}">
+            {% else %}
+                <label for="address">Enter Your Delivery Address:</label><br>
+                <textarea name="address" id="address" required placeholder="Enter delivery address..."></textarea>
+            {% endif %}
+            <button type="submit" class="confirm-btn">✅ Confirm Order</button>
+        </form>
+    </div>
+{% endblock %}

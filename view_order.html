@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+{% if success_message %}
+    <div id="successMessage" class="success-message">
+        {{ success_message }}
+    </div>
+{% endif %}
+<div class="order-details-container">
+    <h1 class="order-title">🧾 Order Details</h1>
+
+    {% if order_items %}
+    <table class="order-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Size</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order_items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.size }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹{{ item.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No items found in this order.</p>
+    {% endif %}
+
+    <div class="order-summary">
+        <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+        <p><strong>Total:</strong> ₹{{ order.total_amount }}</p>
+        <p><strong>Status:</strong> {{ order.status }}</p>
+        <p><strong>Order Date:</strong>
+    {% if order.created_at %}
+        {{ order.created_at.strftime('%d %B %Y, %I:%M %p') }}
+    {% else %}
+        Not Available
+    {% endif %}
+</p>
+
+    </div>
+
+    <div class="payment-section">
+        {% if payment and payment.status == 'Success' %}
+            <p class="payment-status">✅ Payment Completed</p>
+        {% else %}
+        <form action="{{ url_for('user.process_payment') }}" method="post">
+            <input type="hidden" name="order_id" value="{{ order.order_id }}">
+
+            <label for="payment_method">Select Payment Method:</label>
+            <select name="payment_method" id="payment_method" required>
+                <option value="COD">Cash on Delivery</option>
+                <option value="Online">Online Payment</option>
+            </select>
+
+            <button type="submit" class="payment-btn">💳 Confirm Payment</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

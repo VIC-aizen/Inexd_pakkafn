@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        font-family: 'Outfit', sans-serif;
+        color: #111;
+    }
+
+    h1, h3 {
+        margin-bottom: 20px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .order-info {
+        margin-bottom: 30px;
+    }
+
+    .order-items ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0 0 20px;
+    }
+
+    .order-items li {
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 16px;
+    }
+
+    .total {
+        display: block;
+        font-weight: bold;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background-color: #111;
+        color: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .back-link:hover {
+        background-color: #333;
+    }
+</style>
+
+<div class="container">
+    <h1>Order Details</h1>
+
+    <div class="order-info">
+        <h3>Order ID: {{ order.order_id }}</h3>
+        <p><strong>User ID:</strong> {{ order.user_id }}</p>
+        <p><strong>Status:</strong> {{ order.order_status }}</p>
+        <p><strong>Payment Status:</strong>
+            {% if payment.status == 'Success' %}
+                ✅ Success
+            {% else %}
+                ❌ Not Paid
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="order-items">
+        <h3>Order Items</h3>
+        <ul>
+            {% for item, product in order_items %}
+                <li>
+                    {{ product.name }} - {{ item.quantity }} pcs @ ₹{{ product.price }} each 
+                    = ₹{{ (item.quantity * product.price) | round(2) }}<br>
+                    <strong>Size:</strong> {{ product.size }}
+                </li>
+            {% endfor %}
+        </ul>
+        <span class="total">Total: ₹{{ total_price | default(0) | round(2) }}</span>
+    </div>
+
+    <div class="order-info">
+        <h3>Delivery Address</h3>
+        <p>{{ delivery_address }}</p>
+    </div>
+
+    <div class="order-info">
+    <h3>Order Created On</h3>
+    <p>{{ created_at }}</p>
+</div>
+
+
+    <a href="{{ url_for('admin.view_orders') }}" class="back-link">⬅ Back to All Orders</a>
+</div>
+{% endblock %}

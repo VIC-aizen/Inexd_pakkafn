@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Men's Collection</h1>
+<div class="product-grid">
+    {% for product in products %}
+        <div class="product-card">
+            {% if product.image %}
+                <img src="{{ url_for('static', filename='uploads/' ~ product.image) }}" alt="{{ product.name }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='default.jpg') }}" alt="No Image">
+            {% endif %}
+            <div class="product-info">
+                <h2>{{ product.name }}</h2>
+                <p>₹{{ product.price }}</p>
+                <p>Size: {{ product.size }}</p>
+                <form action="/cart/add" method="post">
+                    <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                    <input type="number" name="quantity" value="1" min="1" class="quantity-input">
+                    <button type="submit" class="add-btn">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

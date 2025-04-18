@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>LeLo - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Swiper CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+</head>
+<body>
+
+    <!-- 🔝 Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-logo">LeLo</div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('user.login') }}">User Login</a></li>
+            <li><a href="{{ url_for('user.signup') }}">Signup</a></li>
+            <li><a href="{{ url_for('admin.admin_login') }}">Admin Login</a></li>
+            <li><a href="{{ url_for('product.view_products') }}">Browse Products</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="#feedback">Feedback</a></li>
+        </ul>
+    </nav>
+
+    <!-- 🌟 Hero Section -->
+    <div class="hero">
+        <h1>Welcome to LeLo</h1>
+        <p>Your one-stop shop for the best fashion trends.</p>
+    </div>
+    <!-- best picks-->
+    <section class="best-picks">
+      <h1>Our Best Picks</h1>
+      <div class="best-picks-grid">
+        <div class="pick-item" style="background-image: url({{ url_for('static', filename='image/levissh.webp') }});"></div>
+        <div class="pick-item" style="background-image: url({{ url_for('static', filename='image/uspolots.webp') }});"></div>
+        <div class="pick-item" style="background-image: url({{ url_for('static', filename='image/h&msh.avif') }});"></div>
+        <div class="pick-item" style="background-image: url({{ url_for('static', filename='image/jackt.jpg') }});"></div>
+        <div class="pick-item" style="background-image: url({{ url_for('static', filename='image/levisdj.webp') }});"></div>
+        <div class="pick-item" style="background-image: url({{ url_for('static', filename='image/technots.webp') }});"></div>
+        <div class="pick-item" style="background-image: url({{ url_for('static', filename='image/pumaja.avif') }});"></div>
+        <div class="pick-item" style="background-image: url({{ url_for('static', filename='image/pumats.avif') }});"></div>
+      </div>
+      
+    </section>
+    
+<!-- Swiper Container -->
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide slide1"></div>
+    <div class="swiper-slide slide2"></div>
+    <div class="swiper-slide slide3"></div>
+  </div>
+
+  <!-- Navigation & Pagination -->
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-pagination"></div>
+</div>
+
+  <!-- Navigation Arrows -->
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+
+  <!-- Pagination Dots -->
+  <div class="swiper-pagination"></div>
+</div>
+<!--brand logo-->
+<div class="brand-section">
+  <h1>Brands Available</h1>
+<div class="brand-marquee">
+  <div class="brand-track">
+      <img src="{{ url_for('static', filename='image/adidas.png') }}" alt="Brand 1">
+      <img src="{{ url_for('static', filename='image/jockey.png') }}" alt="Brand 2">
+      <img src="{{ url_for('static', filename='image/levis.png') }}" alt="Brand 3">
+      <img src="{{ url_for('static', filename='image/techno.png') }}" alt="Brand 4">
+      <img src="{{ url_for('static', filename='image/uspolo.png') }}" alt="Brand 5">
+      <img src="{{ url_for('static', filename='image/jack.png') }}" alt="Brand 6">
+      <img src="{{ url_for('static', filename='image/max.png') }}" alt="Brand 7">
+      <img src="{{ url_for('static', filename='image/tom.png') }}" alt="Brand 8">
+      <img src="{{ url_for('static', filename='image/nke.jpg') }}" alt="Brand 9">
+      <img src="{{ url_for('static', filename='image/hm.jpg') }}" alt="Brand 10">
+      <img src="{{ url_for('static', filename='image/puma.png') }}" alt="Brand 11">
+            <!-- Repeat for smooth loop -->
+      <img src="{{ url_for('static', filename='image/adidas.png') }}" alt="Brand 1">
+      <img src="{{ url_for('static', filename='image/jockey.png') }}" alt="Brand 2">
+      <img src="{{ url_for('static', filename='image/levis.png') }}" alt="Brand 3">
+      <img src="{{ url_for('static', filename='image/techno.png') }}" alt="Brand 4">
+      <img src="{{ url_for('static', filename='image/uspolo.png') }}" alt="Brand 5">
+      <img src="{{ url_for('static', filename='image/jack.png') }}" alt="Brand 6">
+      <img src="{{ url_for('static', filename='image/max.png') }}" alt="Brand 7">
+      <img src="{{ url_for('static', filename='image/tom.png') }}" alt="Brand 8">
+      <img src="{{ url_for('static', filename='image/nke.jpg') }}" alt="Brand 9">
+      <img src="{{ url_for('static', filename='image/hm.jpg') }}" alt="Brand 10">
+      <img src="{{ url_for('static', filename='image/puma.png') }}" alt="Brand 11">
+    </div>
+</div>
+
+<footer class="lelo-footer">
+  <div class="footer-top">
+    <!-- Column 1 -->
+    <div class="footer-col">
+      <h4>NEED HELP?</h4>
+      <ul>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#">Track Order</a></li>
+        <li><a href="#">Return & Exchange</a></li>
+        <li><a href="#">FAQs</a></li>
+      </ul>
+    </div>
+
+    <!-- Column 2 -->
+    <div class="footer-col">
+      <h4>COMPANY</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Store Locator</a></li>
+      </ul>
+    </div>
+
+    <!-- Column 3 -->
+    <div class="footer-col">
+      <h4>QUICK LINKS</h4>
+      <ul>
+        <li><a href="{{ url_for('user.login') }}">User Login</a></li>
+        <li><a href="{{ url_for('user.signup') }}">Signup</a></li>
+        <li><a href="{{ url_for('admin.admin_login') }}">Admin Login</a></li>
+        <li><a href="{{ url_for('product.view_products') }}">Browse Products</a></li>
+      </ul>
+    </div>
+
+    <!-- Column 4: Contact & Feedback -->
+    <div class="footer-col">
+      <h4>CONTACT US</h4>
+      <p>Email: support@lelofashion.com</p>
+      <p>Phone: +91 98765 43210</p>
+      <form class="feedback-form">
+        <textarea rows="3" placeholder="Your feedback..."></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-pinterest-p"></i></a>
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+    </div>
+    <p>&copy; 2025 LeLo. All rights reserved.</p>
+  </div>
+</footer>
+
+
+    <!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper('.mySwiper', {
+    loop: true,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>
+     
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Add Product{% endblock %}
+
+{% block content %}
+<div class="add-product-container">
+    <h1 class="page-heading">➕ Add New Product</h1>
+
+    <!-- ✅ Add enctype for file upload -->
+    <form method="POST" enctype="multipart/form-data" class="product-form">
+        <div class="form-group">
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter product name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price (₹):</label>
+            <input type="number" id="price" name="price" placeholder="Enter price" required>
+        </div>
+
+        <div class="form-group">
+            <label for="stock">Stock Quantity:</label>
+            <input type="number" id="stock" name="stock" placeholder="Enter stock amount" required>
+        </div>
+
+        <div class="form-group">
+            <label for="size">Available Size(s):</label>
+            <input type="text" id="size" name="size" placeholder="E.g., S, M, L, XL" required>
+        </div>
+
+        <div class="form-group">
+            <label for="supplier_id">Select Supplier:</label>
+            <select id="supplier_id" name="supplier_id" required>
+                <option value="" disabled selected>Select a supplier</option>
+                {% for supplier in suppliers %}
+                    <option value="{{ supplier.supplier_id }}">{{ supplier.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- ✅ New image upload field -->
+        <div class="form-group">
+            <label for="image">Product Image:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">✅ Add Product</button>
+            <a href="{{ url_for('admin.view_products') }}" class="back-link">⬅️ Back to Product List</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
